@@ -77,7 +77,6 @@ class MainApp(App):
             sum([self.btn1.side, self.btn5.side], self.btn9.side),
             sum([self.btn7.side, self.btn5.side], self.btn3.side),
             ]
-
         if 3 in sums:
             self.winner = "X win"
         elif -3 in sums:
