@@ -11,7 +11,7 @@ from kivy.uix.modalview import ModalView
 Builder.load_file('my.kv')
 #Config.set("graphics", "resizable",0)
 Config.set("graphics", "width", 500)
-Config.set("graphics", "height", 500)
+Config.set("graphics", "height", 700)
 
 
 class GButton(Button):
@@ -43,9 +43,10 @@ class MyApp(App):
         self.btn8 = GButton(on_release=self.move_bind)
         self.btn9 = GButton(on_release=self.move_bind)
 
-        self.count_label = Label(text=f'X: {self.count[0]}   |   O: {self.count[1]}', size_hint = [1,.3], font_size = 40)
-        self.restart_btn = Button(text="Next round", on_press=self.reset, size_hint = [1,.1])
-
+        self.count_label = Label(text=f'[color=8999A3]X: {self.count[0]}   |   O: {self.count[1]}[/color]', size_hint = [1,.2], markup = True, font_size = 40)
+        self.small_label = Label(size_hint = [1,.1], font_size = 20, markup = True)
+        restart_btn = Button(text="Next round", on_press=self.reset, size_hint = [1,.13], center_x=.25)
+        
         self.cells = [
             self.btn1,
             self.btn2, 
@@ -56,30 +57,34 @@ class MyApp(App):
             self.btn7, 
             self.btn8, 
             self.btn9,
-            ]
+        ]
 
-        play_grid = GridLayout(cols=3, rows=3, spacing=5)
         main_layout = MainLayout()
+        play_grid = GridLayout(cols=3, rows=3, spacing=5)
+        empty_label = Label(size_hint = [1,.1])
         
         for i in self.cells:
             play_grid.add_widget(i)
 
         main_layout.add_widget(self.count_label)
+        main_layout.add_widget(self.small_label)
         main_layout.add_widget(play_grid)
-        main_layout.add_widget(self.restart_btn)
+        main_layout.add_widget(empty_label)
+        main_layout.add_widget(restart_btn)
 
         return main_layout
 
     def move_bind(self, button):
-        #button.font_size = 40
-        if self.turn and int(button.side) != 1 and int(button.side) != -1:
+        if self.turn and button.side != 1 and button.side != -1 and button.side != 1000:
             button.text = "X"
             button.side = 1
             self.turn = False
-        elif not self.turn and int(button.side) != 1 and int(button.side) != -1:
+        elif not self.turn and button.side != 1 and button.side != -1 and button.side != 1000:
             button.text = "O"
             button.side = -1
             self.turn = True
+        else:
+            return
         self.check_game()
 
     def check_game(self):
@@ -108,16 +113,15 @@ class MyApp(App):
         self.win()
     
     def win(self):
-        self.count_label.text=f'X:{self.count[0]} O:{self.count[1]}'
-        popup = ModalView(size_hint=(0.75, 0.5))
-        victory_label = Label(text=self.winner, font_size=50)
-        popup.add_widget(victory_label)
-        popup.bind(on_dismiss=self.reset)
-        popup.open()
-    
+        self.count_label.text = f'[color=8999A3]X: {self.count[0]}   |   O: {self.count[1]}[/color]'
+        self.small_label.text = f'[color=7289DA]{self.winner}[/color]'
+        for i in self.cells:
+            if i.side == 0:
+                i.side = 1000
+                print(i.side)
+                i.text = '-'
+
     def reset(self, *args):
-        global winner
-        winner = None
         for i in self.cells:
             i.side = 0
             i.text = ""
