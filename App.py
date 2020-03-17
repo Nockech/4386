@@ -3,7 +3,6 @@ from kivy.config import Config
 from kivy.lang.builder import Builder
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-#from kivy.uix.widget import Widget
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.modalview import ModalView
@@ -118,7 +117,6 @@ class MyApp(App):
         for i in self.cells:
             if i.side == 0:
                 i.side = 1000
-                print(i.side)
                 i.text = '-'
 
     def reset(self, *args):
