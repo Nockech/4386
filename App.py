@@ -3,7 +3,6 @@ from kivy.config import Config
 from kivy.lang.builder import Builder
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-#from kivy.uix.widget import Widget
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.modalview import ModalView
@@ -28,7 +27,7 @@ class MainLayout(BoxLayout):
 
 class MyApp(App):
     def build(self):
-        self.title = 'Tic tac toe(Hleb edition)'
+        self.title = 'Tic tac toe'
         self.winner = None
         self.turn = True
         self.count = [0,0]
