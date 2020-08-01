@@ -1,2 +1,2 @@
 # Tic tac toe
-Simple game written on Kotlin
+Simple Android game written on Kotlin
